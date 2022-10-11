@@ -5,7 +5,7 @@ const connection = mysql.createPool({
   port: 4000,
   user: 'root',
   password: 'password',
-  database: 'store_manager_db',
+  database: 'StoreManager',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
