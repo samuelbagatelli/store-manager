@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { findAll, findById } = require('../models');
+const { findAll, findById, insert } = require('../models');
 
 const router = express.Router();
 
@@ -16,6 +16,19 @@ router.get('/:id', async (req, res) => {
   if (!result.length) res.status(404).json({ message: 'Product not found' });
 
   res.status(200).json(...result);
+});
+
+router.post('/', async (req, res) => {
+  const [result] = await findAll();
+
+  const body = {
+    id: result.length + 1,
+    name: req.body.name,
+  };
+
+  await insert(body);
+
+  res.status(201).json(body);
 });
 
 module.exports = router;
