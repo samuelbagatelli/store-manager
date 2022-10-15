@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { validateNameExists, validateNameLength } = require('../middlewares');
-const { findAll, findById, insert } = require('../models');
+const { findAll, findById, insertProducts } = require('../models');
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.post('/', validateNameExists, validateNameLength, async (req, res) => {
     name: req.body.name,
   };
 
-  await insert(body);
+  await insertProducts(body);
 
   res.status(201).json(body);
 });

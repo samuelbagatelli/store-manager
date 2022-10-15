@@ -19,5 +19,5 @@ describe('Unit tests for the service products route', function () {
     const result = await insert(body);
 
     expect(result).to.deep.equal(body);
-  })
-})
+  });
+});
