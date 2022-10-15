@@ -11,7 +11,12 @@ const validateProductIdExists = ({ body }, res, next) => {
 const validateQuantityValue = ({ body }, res, next) => {
   const checkBody = body.find((element) => element.quantity <= 0);
 
-  if (checkBody) return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+  if (checkBody) {
+    return (
+      res.status(422)
+        .json({ message: '"quantity" must be greater than or equal to 1' })
+    );
+  }
 
   next();
 };
