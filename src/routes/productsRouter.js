@@ -1,7 +1,8 @@
 const express = require('express');
+const camelize = require('camelize');
 
-const { validateNameExists, validateNameLength } = require('../middlewares');
-const { findAll, findById, insertProducts } = require('../models');
+const { validateNameExists, validateNameLength, searchProduct } = require('../middlewares');
+const { findAll, findById, insertProducts, updateProducts } = require('../models');
 
 const router = express.Router();
 
@@ -27,6 +28,15 @@ router.post('/', validateNameExists, validateNameLength, async (req, res) => {
   await insertProducts(body);
 
   res.status(201).json(body);
+});
+
+router.put('/:id', validateNameExists, validateNameLength, searchProduct, async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  const [result] = await updateProducts(name, id);
+
+  res.status(200).json(camelize(...result));
 });
 
 module.exports = router;
