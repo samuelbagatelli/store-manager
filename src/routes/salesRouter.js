@@ -2,8 +2,6 @@ const express = require('express');
 const conn = require('../connection');
 const salesMiddlewares = require('../middlewares/sales.middlewares');
 
-const { validateProductIdDb, ...salesMiddlewares } = salesMiddlewares;
-
 const middlewares = Object.values(salesMiddlewares);
 
 const { insertSales, insertSalesProducts } = require('../models');
