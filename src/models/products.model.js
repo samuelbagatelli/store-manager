@@ -5,7 +5,7 @@ const findAll = () => conn.execute('SELECT * FROM products');
 const findById = (id) => conn.execute('SELECT * FROM products WHERE id = ?', [id]);
 
 const insertProducts = ({ name }) => conn
-  .execute('INSERT INTO products (name) VALUES (?, ?)', [name]);
+  .execute('INSERT INTO products (name) VALUES (?)', [name]);
 
 const updateProducts = async (name, id) => {
   await conn.execute(`UPDATE products
@@ -16,9 +16,12 @@ const updateProducts = async (name, id) => {
   return conn.execute('SELECT * FROM products WHERE id = ?', [id]);
 };
 
+const deleteProduct = (id) => conn.execute('DELETE FROM products WHERE products.id = ?', [id]);
+
 module.exports = {
   findAll,
   findById,
   insertProducts,
   updateProducts,
+  deleteProduct,
 };

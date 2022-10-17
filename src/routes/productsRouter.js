@@ -2,7 +2,7 @@ const express = require('express');
 const camelize = require('camelize');
 
 const { validateNameExists, validateNameLength, searchProduct } = require('../middlewares');
-const { findAll, findById, insertProducts, updateProducts } = require('../models');
+const { findAll, findById, insertProducts, updateProducts, deleteProduct } = require('../models');
 
 const router = express.Router();
 
@@ -37,6 +37,12 @@ router.put('/:id', validateNameExists, validateNameLength, searchProduct, async 
   const [result] = await updateProducts(name, id);
 
   res.status(200).json(camelize(...result));
+});
+
+router.delete('/:id', searchProduct, async (req, res) => {
+  await deleteProduct(req.params.id);
+
+  res.sendStatus(204);
 });
 
 module.exports = router;
