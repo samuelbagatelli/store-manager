@@ -20,10 +20,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', validateNameExists, validateNameLength, async (req, res) => {
-  const [result] = await findAll();
-
   const body = {
-    id: result.length + 1,
     name: req.body.name,
   };
 
