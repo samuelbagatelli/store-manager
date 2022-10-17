@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const connection = require('../../../src/connection');
 
-const { insert } = require('../../../src/models');
+const { insertProducts } = require('../../../src/models');
 
 describe('Unit tests for the service products route', function () {
   afterEach(sinon.restore);
@@ -16,7 +16,7 @@ describe('Unit tests for the service products route', function () {
 
     sinon.stub(connection, 'execute').resolves(body);
 
-    const result = await insert(body);
+    const result = await insertProducts(body);
 
     expect(result).to.deep.equal(body);
   });

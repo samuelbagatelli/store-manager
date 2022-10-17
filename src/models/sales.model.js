@@ -7,6 +7,8 @@ const insertSalesProducts = (lastId, productsArray) => {
     await conn.execute(`INSERT INTO sales_products (sale_id, product_id, quantity)
       VALUES (?, ?, ?)`, [lastId, productId, quantity]);
   });
+
+  return;
 };
 
 module.exports = {
