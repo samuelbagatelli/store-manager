@@ -1,4 +1,4 @@
-const { findAll } = require('../models');
+const { productsModel } = require('../models');
 
 const validateProductIdExists = ({ body }, res, next) => {
   const { productId } = body[0];
@@ -30,14 +30,18 @@ const validateQuantityExists = ({ body }, res, next) => {
 };
 
 const validateProductIdDb = async ({ body }, res, next) => {
-  const productsIds = body.map((element) => element.productId);
+  const errorsArray = body.map(async (elem) => {
+    const [[result]] = await productsModel.findById(elem.productId);
 
-  const [result] = await findAll();
-  const dataBaseIds = result.map((element) => element.id);
+    if (!result) return 'error';
+    return 'OK';
+  });
 
-  const checkIds = productsIds.every((element) => dataBaseIds.includes(element));
+  const errors = await Promise.all(errorsArray);
 
-  if (!checkIds) return res.status(404).json({ message: 'Product not found' });
+  const check = errors.some((element) => element === 'error');
+
+  if (check) return res.status(404).json({ message: 'Product not found' });
 
   next();
 };

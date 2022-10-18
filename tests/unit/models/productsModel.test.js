@@ -2,13 +2,11 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const connection = require('../../../src/connection');
-const { findAll, findById } = require('../../../src/models/index');
+const { findAll, findById, insertProducts } = require('../../../src/models/index');
 
-const products = require('./mocks');
+const { products, newProduct, resolvesNewProduct } = require('./mocks');
 
 describe('Unit tests for the model products route', function () {
-  afterEach(sinon.restore);
-
   it('Returns all products when no id is informed', async function () {
     sinon.stub(connection, 'execute').resolves(products);
 
@@ -24,4 +22,14 @@ describe('Unit tests for the model products route', function () {
 
     expect(result).to.deep.equal(products[0]);
   });
+
+  it('Inserts the product into the table and returns it', async function () {
+    sinon.stub(connection, 'execute').resolves(resolvesNewProduct);
+
+    const result = await insertProducts(newProduct);
+
+    expect(result).to.deep.equal(resolvesNewProduct);
+  });
+
+  afterEach(sinon.restore);
 });

@@ -4,4 +4,17 @@ const products = [
   { id: 3, name: 'Escudo do Capitão América' }
 ];
 
-module.exports = products;
+const newProduct = {
+  name: 'Novo Produto',
+};
+
+const resolvesNewProduct = {
+  id: 4,
+  name: 'Novo Produto',
+};
+
+module.exports = {
+  products,
+  newProduct,
+  resolvesNewProduct,
+};
