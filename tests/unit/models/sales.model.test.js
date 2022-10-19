@@ -1,10 +1,14 @@
-const { expect } = require('chai');
+const chai = require('chai');
 const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+
+const { expect } = chai;
+chai.use(sinonChai);
 
 const { salesModel } = require('../../../src/models');
 const connection = require('../../../src/connection');
 
-const { salesMocks } = require('./mocks');
+const { salesMocks } = require('../mocks');
 
 describe('Unit tests for the service sales route', function () {
   afterEach(sinon.restore);
@@ -47,5 +51,15 @@ describe('Unit tests for the service sales route', function () {
     const result = await salesModel.findAllSales();
 
     expect(result).to.deep.equal(expectedAllSales);
+  });
+
+  it('Returns the sale requested when the id is informed', async function () {
+    const { expectedSale } = salesMocks;
+
+    sinon.stub(connection, 'execute').resolves(expectedSale);
+
+    const result = await salesModel.findSalesById(1);
+
+    expect(result).to.deep.equal(expectedSale);
   });
 });

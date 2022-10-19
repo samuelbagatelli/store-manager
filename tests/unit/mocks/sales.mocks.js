@@ -39,10 +39,18 @@ const expectedAllSales = [
   }
 ];
 
+const expectedSale = {
+  sale_id: 1,
+  product_id: 1,
+  quantity: 5,
+  date: "2022-10-18 22:14:23"
+};
+
 module.exports = {
   newSale,
   saleCreateResponse,
   expectedDate,
   expectedIdResult,
   expectedAllSales,
+  expectedSale,
 };
