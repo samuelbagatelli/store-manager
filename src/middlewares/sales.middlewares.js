@@ -46,9 +46,19 @@ const validateProductIdDb = async ({ body }, res, next) => {
   next();
 };
 
+const validateProductExists = async (req, res, next) => {
+  const { id } = req.params;
+  const [[result]] = await productsModel.findById(id);
+
+  if (!result) return res.status(404).json({ message: 'Sale not found' });
+
+  next();
+};
+
 module.exports = {
   validateQuantityValue,
   validateProductIdExists,
   validateQuantityExists,
   validateProductIdDb,
+  validateProductExists,
 };

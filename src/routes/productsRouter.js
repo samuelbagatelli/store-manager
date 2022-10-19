@@ -1,7 +1,12 @@
 const express = require('express');
-// const camelize = require('camelize');
 
-const { validateNameExists, validateNameLength, searchProduct } = require('../middlewares');
+const { productsMiddlewares } = require('../middlewares');
+
+const {
+  searchProduct,
+  validateNameExists,
+  validateNameLength,
+} = productsMiddlewares;
 
 const { productsController } = require('../controllers');
 
@@ -11,7 +16,12 @@ router.get('/', productsController.findAll);
 
 router.get('/:id', searchProduct, productsController.findById);
 
-router.post('/', validateNameExists, validateNameLength, productsController.insertProduct);
+router.post(
+  '/',
+  validateNameExists,
+  validateNameLength,
+  productsController.insertProduct,
+);
 
 router.put(
   '/:id',

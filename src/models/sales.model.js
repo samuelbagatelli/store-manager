@@ -1,11 +1,13 @@
 const conn = require('../connection');
 
-const insertSales = () => conn.execute('INSERT INTO sales (date) VALUES (NOW())');
+const findSalesId = () => conn.execute('SELECT id FROM sales;');
+
+const insertSales = () => conn.execute('INSERT INTO sales (date) VALUES (NOW());');
 
 const insertSalesProducts = (lastId, productsArray) => {
   productsArray.forEach(async ({ productId, quantity }) => {
-    await conn.execute(`INSERT INTO sales_products (sale_id, product_id, quantity)
-      VALUES (?, ?, ?)`, [lastId, productId, quantity]);
+      await conn.execute(`INSERT INTO sales_products (sale_id, product_id, quantity)
+      VALUES (?, ?, ?);`, [lastId, productId, quantity]);
   });
 };
 
@@ -26,6 +28,7 @@ const findSalesById = (id) => conn.execute(
 );
 
 module.exports = {
+  findSalesId,
   insertSales,
   insertSalesProducts,
   findAllSales,
